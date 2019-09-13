@@ -1,0 +1,13 @@
+<% include partials/header %>
+<h1>Welcome to the blog index page</h1>
+<% blogs.forEach((blog)=>{ %>
+<div>
+    <h2><%= blog.title %></h2>
+    <img src="<%= blog.image %>" alt="Blog image" srcset="">
+    <p><%= blog.created %></p>
+    <p><%= blog.body.substring(0,100) %>...</p>
+    <a href="/blogs/<%= blog.id %>" class="ui violet basic button">Read More</a>
+    <a href="/blogs/<%= blog.id%>/edit">Edit</a>
+</div>
+<% }); %>
+<% include partials/footer %>

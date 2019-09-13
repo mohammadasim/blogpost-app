@@ -1,0 +1,14 @@
+body {
+    background: whitesmoke;
+}
+
+i.icon {
+    font-size: 2em;
+}
+
+.container.main{
+    margin-top: 7.0em;
+}
+.back{
+    margin-left: 10px;
+}
