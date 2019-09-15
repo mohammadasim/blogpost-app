@@ -85,28 +85,24 @@ app.get("/blogs/:id", (req, res) => {
 });
 
 app.get("/blogs/:id/edit", (req, res) => {
-  Blog.findById(req.params.id, (err, foundBlog) =>{
-    if(err){
+  Blog.findById(req.params.id, (err, foundBlog) => {
+    if (err) {
       console.log('An Error occured: ', err)
-    }
-    else{
-      res.render("edit", {blog:foundBlog});
+    } else {
+      res.render("edit", {
+        blog: foundBlog
+      });
     }
   });
 });
 
 app.put("/blogs/:id", (req, res) => {
-  var query = {title: req.params.title };
-  Blog.findOneAndUpdate(query, {
-    title: req.params.title,
-    image: req.params.image,
-    body: req.params.body
-  }, (err, updatedBlog) =>{
-    if(err){
-      res.render("/blogs/req.params.id/edit");
-    }
-    else{
-      res.render("/blogs/updatedBlog.id");
+  Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog) => {
+    if (err) {
+      console.log("An error was thrown *****************************");
+      res.redirect("/blogs/req.params.id/edit");
+    } else {
+      res.redirect("/blogs");
     }
   });
 });
