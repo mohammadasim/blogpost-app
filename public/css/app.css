@@ -9,6 +9,6 @@ i.icon {
 .container.main{
     margin-top: 7.0em;
 }
-.back{
-    margin-left: 10px;
+#form_button{
+    display: inline;
 }

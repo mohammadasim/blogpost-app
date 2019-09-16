@@ -1,17 +1,20 @@
 // Constant Declaration
 const express = require("express");
 const mongoose = require("mongoose");
-const methodOverride = require("method-override");
-const app = express();
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
+const expressSanitizer = require("express-sanitizer");
 
 //Initialization
+const app = express();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(expressSanitizer()); //Important to place it after the body-parser use statement
 app.use(methodOverride("_method"));
+
 
 // DB CONNECTION SETUP
 var DATABASE_URL = process.env.MONGODB_DATABASE_URL;
@@ -63,6 +66,7 @@ app.get("/blogs/new", (req, res) => {
 });
 
 app.post("/blogs", (req, res) => {
+  req.body.blog.body = req.sanitize(req.body.blog.body);
   Blog.create(req.body.blog, (err, blog) => {
     if (err) {
       console.log(err);
@@ -97,11 +101,23 @@ app.get("/blogs/:id/edit", (req, res) => {
 });
 
 app.put("/blogs/:id", (req, res) => {
+  req.body.blog.body = req.sanitize(req.body.blog.body);
   Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog) => {
     if (err) {
-      console.log("An error was thrown *****************************");
+      console.log("An error was thrown");
       res.redirect("/blogs/req.params.id/edit");
     } else {
+      res.redirect("/blogs");
+    }
+  });
+});
+
+app.delete("/blogs/:id", (req, res) =>{
+  Blog.findOneAndDelete(req.params.id,(err) =>{
+    if(err){
+      res.redirect("/blogs/req.params.id");
+    }
+    else{
       res.redirect("/blogs");
     }
   });

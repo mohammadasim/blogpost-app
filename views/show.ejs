@@ -12,15 +12,12 @@
         <div class="description">
             <p><%- blog.body %></p>
         </div>
-    </div>
-    <div class="ui labeled button" tabindex="0">
-        <div class="ui red button">
-            <i class="heart icon"></i> Like
-        </div>
-        <a class="ui basic red left pointing label">
-            1,048
+        <a class="ui orange basic button" href="/blogs">Back to Blogs</a>
+        <form id="form_button" action="/blogs/<%= blog._id %>?_method=DELETE" method="post">
+            <button type="submit" class="ui red button basic">Delete</button>
+        </form>
+        <a class="ui floated basic purple button" href="/blogs/<%= blog._id %>/edit">
+            Edit
         </a>
-       <a style = "margin-left: 10px;" class="ui orange basic label" href="/blogs">Back to Blogs</a>
     </div>
-</div>
-<% include partials/footer %>
+    <% include partials/footer %>
